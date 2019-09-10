@@ -44,6 +44,7 @@ public class Main {
             // for MessageLoop thread
             // to finish.
             t.join(1000);
+            u.join(1000);
             if (((System.currentTimeMillis() - startTime) > patience)
                     && t.isAlive()) {
                 threadMessage("Tired of waiting!");
@@ -51,17 +52,13 @@ public class Main {
                 // Shouldn't be long now
                 // -- wait indefinitely
                 t.join();
-            }
-            if(u.isAlive() && !t.isAlive())
-            {
-                t.join();
                 u.join();
             }
-            if(!u.isAlive() && t.isAlive())
+            if(u.isAlive() && t.isAlive())
             {
-                t.join();
-                u.join();
+                u.interrupt();
             }
+
         }
         threadMessage("Finally!");
     }
